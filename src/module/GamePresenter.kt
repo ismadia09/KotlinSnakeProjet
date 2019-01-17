@@ -1,10 +1,8 @@
 package module
 
-import data.model.Position
-import data.model.Save
-import data.model.SaveItem
-import data.model.Snake
+import data.model.*
 import java.io.*
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -34,7 +32,12 @@ class GamePresenter {
     var playground = arrayOf<Array<String>>()
     private var foodBlocks = mutableListOf<Position>()
     private val size = 10
-    var save = mutableListOf<SaveItem>()
+    var saveItemList = mutableListOf<SaveItem>()
+    var currentScore = 0
+    val fileName = "src/data/save/savedGame.txt"
+    val file = File(fileName)
+    var saveFileExists = false
+    var save = Save(mutableListOf<GameSave>())
 
     init {
         view = GameConsole(this)
@@ -43,9 +46,8 @@ class GamePresenter {
     fun initGame() {
 
 
-        saveGame()
-        saveInFile()
         loadSave()
+        printLeaderBoard()
         println("Start : ")
         val input = Scanner(System.`in`)
         val lineString = input.nextLine()
@@ -125,29 +127,26 @@ class GamePresenter {
         when {
             userInput.contains(TOPKEY, true) -> if (lastDirection != Direction.DOWN) {
                 lastDirection = Direction.UP
-                saveGame()
                 isDead = snake.moveSnake(lastDirection)
             }
 
 
             userInput.contains(BOTOOMKEY, true) -> if (lastDirection != Direction.UP) {
                 lastDirection = Direction.DOWN
-                saveGame()
                 isDead = snake.moveSnake(lastDirection)
             }
             userInput.contains(LEFTKEY, true) -> if (lastDirection != Direction.RIGHT) {
                 lastDirection = Direction.LEFT
-                saveGame()
                 isDead = snake.moveSnake(lastDirection)
             }
             userInput.contains(RIGHTKEY, true) -> if (lastDirection != Direction.LEFT) {
                 lastDirection = Direction.RIGHT
-                saveGame()
                 isDead = snake.moveSnake(lastDirection)
             }
             else -> {
-                saveGame()
+
                 isDead = snake.moveSnake(lastDirection)
+
             }
         }
 
@@ -155,8 +154,10 @@ class GamePresenter {
             if (isDead_) {
                 view.userDied()
             }
-        }
+            updateScore(isDead)
 
+        }
+        saveGameStep()
         foodBlocks = snake.checkAteFood(foodBlocks)
     }
 
@@ -171,44 +172,62 @@ class GamePresenter {
         }
     }
 
-    /**
-     * Add SaveItem in SaveItem Array
-     */
-    fun saveGame(){
-        var saveItem = SaveItem(lastDirection, playground)
-        print(saveItem)
-        save.add(saveItem)
-    }
     /***
-     * Save the SaveItem array in a file
+     * Load GameSave From a file
      */
-    fun saveInFile() {
-        val fileName = "src/data/save/savedGame.txt"
-        val file = File(fileName)
-        var save = Save(save)
-        ObjectOutputStream(FileOutputStream(file)).use { it -> it.writeObject(save) }
+    fun loadSave() {
+        saveFileExists = file.exists()
+        if (saveFileExists) {
+            println("Lecture de la sauvegarde $file back")
+            //Now time to read the family back into memory
+            ObjectInputStream(FileInputStream(file)).use { it ->
+                //Read the family back from the file
+                save = it.readObject() as Save
+                print(save)
+                println()
+            }
 
-        println("Partie Sauvegardée $file")
-        println()
-    }
-
-    /***
-     * Load Save From a file
-     */
-    fun loadSave(){
-        val fileName = "src/data/save/savedGame.txt"
-        val file = File(fileName)
-        println("Lecture de la sauvegarde $file back")
-
-        //Now time to read the family back into memory
-        ObjectInputStream(FileInputStream(file)).use { it ->
-            //Read the family back from the file
-            val restoredSave = it.readObject()
-            print(restoredSave)
-            println()
 
         }
     }
 
+    /***
+     * GameSave the SaveItem array in a file
+     */
+    fun saveInFile() {
+        val currentDate = LocalDateTime.now()
+        var gameSave = GameSave(saveItemList, currentScore, currentDate)
+        save.saves.add(gameSave)
+        ObjectOutputStream(FileOutputStream(file)).use { it -> it.writeObject(save) }
+        println("Partie Sauvegardée $file")
+        println()
+    }
 
+    /**
+     * Add SaveItem in SaveItem Array
+     */
+    fun saveGameStep() {
+        var saveItem = SaveItem(lastDirection, playground)
+        print(saveItem)
+        saveItemList.add(saveItem)
+    }
+
+
+    /**
+     * Update score
+     */
+    fun updateScore(isDead: Boolean) {
+        if (isDead == false) {
+            currentScore += 100
+        }
+    }
+
+    fun printLeaderBoard() {
+        val saves = save.saves
+        var sortedList = saves.sortedWith(compareBy({ it.score }))
+        for (item in sortedList) {
+            val saveDateString = item.saveDate.toLocalDate()
+            println("Score du $saveDateString ${item.score}")
+        }
+    }
 }
