@@ -1,6 +1,6 @@
 package misc
 
-class Utils{
+class Utils {
 
     companion object {
         fun waitingThread() {

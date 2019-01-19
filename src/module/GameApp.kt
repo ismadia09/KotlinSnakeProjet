@@ -1,11 +1,10 @@
 package module
 
 
-fun main( args : Array<String>){
+fun main(args: Array<String>) {
     startGame()
 }
 
-fun startGame(){
-    // GamePresenter().initMenu()
+fun startGame() {
     GameConsole(GamePresenter()).initMenu()
 }

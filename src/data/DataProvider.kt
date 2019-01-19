@@ -1,7 +1,5 @@
 package data
 
-import module.GamePresenter
-
 object DataProvider {
 
     fun prepareMenuHomeItem(): Array<String> {
@@ -12,10 +10,6 @@ object DataProvider {
         menuItems.add(LabelDefinition.menuItemQuitGame)
 
         return menuItems.toTypedArray()
-    }
-
-    fun prepareResetGame(presenter: GamePresenter) {
-
     }
 
 

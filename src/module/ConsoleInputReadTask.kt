@@ -19,9 +19,9 @@ class ConsoleInputReadTask : Callable<String> {
                 while (!br.ready()) {
 
                     try {
-                    val robot = Robot()
-                    robot.keyPress(KeyEvent.VK_ENTER)
-                    robot.keyRelease(KeyEvent.VK_ENTER)
+                        val robot = Robot()
+                        robot.keyPress(KeyEvent.VK_ENTER)
+                        robot.keyRelease(KeyEvent.VK_ENTER)
                     } catch (e: AWTException) {
                         // e.printStackTrace()
                     }

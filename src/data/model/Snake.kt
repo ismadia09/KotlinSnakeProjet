@@ -1,9 +1,8 @@
 package data.model
 
-import com.sun.org.apache.xpath.internal.operations.Bool
 import module.Direction
 
-class Snake (var coord: Position){
+class Snake(var coord: Position) {
 
     var body = mutableListOf<Position>()
     var sizeGround = 0
@@ -20,7 +19,7 @@ class Snake (var coord: Position){
 
         var lastPosition = body.last()
 
-        when(dir) {
+        when (dir) {
             Direction.DOWN -> {
                 lastPosition.x
                 body.add(lastPosition)
@@ -40,7 +39,7 @@ class Snake (var coord: Position){
         }
     }
 
-    fun moveSnake(dir: Direction) :Boolean? {
+    fun moveSnake(dir: Direction): Boolean? {
 
         lastDirection = dir
 
@@ -48,7 +47,7 @@ class Snake (var coord: Position){
         tmp.add(Position(body[0].x, body[0].y, body[0].pattern))
 
         for (i in 0 until body.size) {
-            if (i>0){
+            if (i > 0) {
                 if (body.size - 1 > i - 1) {
                     tmp.add(Position(body[i - 1].x, body[i - 1].y, body[i].pattern))
                 }
@@ -57,7 +56,7 @@ class Snake (var coord: Position){
 
         body = tmp.toMutableList()
 
-        when(dir) {
+        when (dir) {
             Direction.DOWN -> body[0].x++
             Direction.UP -> body[0].x--
             Direction.LEFT -> body[0].y--
@@ -65,28 +64,28 @@ class Snake (var coord: Position){
         }
 
         checkInfinityWall()
-        return  checkAteYourself()
+        return checkAteYourself()
     }
 
     private fun checkInfinityWall() {
 
-        if ( body[0].x > sizeGround ) {
+        if (body[0].x > sizeGround) {
             body[0].x = 0
-        } else if ( body[0].x < 0 ) {
+        } else if (body[0].x < 0) {
             body[0].x = sizeGround
-        } else if ( body[0].y < 0 ) {
+        } else if (body[0].y < 0) {
             body[0].y = sizeGround
-        } else if ( body[0].y > sizeGround) {
+        } else if (body[0].y > sizeGround) {
             body[0].y = 0
         }
     }
 
-    private fun checkAteYourself() : Boolean {
+    private fun checkAteYourself(): Boolean {
 
         val tmp = body.filter { it.pattern != "@" }
 
-        if ( tmp.contains(body[0]) ) {
-           // throw Exception("ok")
+        if (tmp.contains(body[0])) {
+            // throw Exception("ok")
             return true
         }
 
@@ -94,14 +93,14 @@ class Snake (var coord: Position){
     }
 
 
-    fun checkAteFood(food: MutableList<Position>) :MutableList<Position> {
+    fun checkAteFood(food: MutableList<Position>): MutableList<Position> {
 
-        if ( food.contains(body[0]) ) {
+        if (food.contains(body[0])) {
             addBodyBlock(lastDirection!!)
             food.remove(body[0])
         }
 
-        return  food
+        return food
     }
 
 }
