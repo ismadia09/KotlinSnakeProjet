@@ -2,8 +2,7 @@ package module
 
 import data.LabelDefinition
 import data.model.*
-import java.io.*
-import java.time.LocalDateTime
+import java.io.File
 import java.util.*
 
 
@@ -39,14 +38,15 @@ class GamePresenter {
     val file = File(fileName)
     var saveFileExists = false
     var save = Save(mutableListOf<GameSave>())
+    var menuItems = arrayOf<String>()
 
     init {
         view = GameConsole(this)
     }
 
     fun initGame() {
-        loadSave()
-        println("Press enter key to start the game : ")
+        askForloadSave()
+        println("${LabelDefinition.initGameBeginMessage}")
         val input = Scanner(System.`in`)
         val lineString = input.nextLine()
 
@@ -58,35 +58,19 @@ class GamePresenter {
 
     }
 
-    fun initSnakeGame() {
+    private fun initSnakeGame() {
         preparePlayground(size)
         snake.initSnake(size)
         view.startLoopReader()
     }
 
-    fun initMenu() {
-        println()
-        println("${LabelDefinition.menuHomeTitle}")
-        loadSave()
-        LabelDefinition.displayMenuItems()
-        println("${LabelDefinition.menuItemQuitGame}")
-
-        val input = Scanner(System.`in`)
-        val lineString = input.nextLine()
-
-        when (lineString) {
-            "1" -> initGame()
-            "2" -> printLeaderBoard()
-            "3" -> replayGames()
-            "q" -> quitGame()
-        }
-
+    fun askForInitMenu() {
+        view.initMenu()
 
     }
 
-    fun quitGame() {
-        println("${LabelDefinition.quitGameString}")
-        return
+    fun askQuitGame() {
+        view.quitGame()
     }
 
 
@@ -197,28 +181,15 @@ class GamePresenter {
     /***
      * Load GameSave From a file
      */
-    fun loadSave() {
-        saveFileExists = file.exists()
-        if (saveFileExists) {
-            println("Lecture de la sauvegarde\n")
-            ObjectInputStream(FileInputStream(file)).use { it ->
-                save = it.readObject() as Save
-            }
-
-
-        }
+    fun askForloadSave() {
+        view.loadSave()
     }
 
     /***
      * GameSave the SaveItem array in a file
      */
-    fun saveInFile() {
-        val currentDate = LocalDateTime.now()
-        var gameSave = GameSave(saveItemList, currentScore, currentDate)
-        save.saves.add(gameSave)
-        ObjectOutputStream(FileOutputStream(file)).use { it -> it.writeObject(save) }
-        println("Partie Sauvegardée $file")
-        println()
+    fun askForSaveInFile() {
+        view.saveInFile()
     }
 
     /**
@@ -234,85 +205,18 @@ class GamePresenter {
     /**
      * Update score
      */
-    fun updateScore(isDead: Boolean) {
+    private fun updateScore(isDead: Boolean) {
         if (isDead == false) {
             currentScore += 100
         }
     }
 
-    fun printLeaderBoard() {
-        val saves = save.saves
-        if (saves.count() > 0) {
-            var ascendingSortedScoreList = saves.sortedWith(compareBy({ it.score }))
-            val descendingSortedScoreList = ascendingSortedScoreList.reversed()
-            println(LabelDefinition.separatorString)
-            println(LabelDefinition.leaderBoardTitle)
-            println()
-
-            var position = 1
-            for (item in descendingSortedScoreList) {
-                val saveDateString = item.saveDate.toLocalDate()
-                println("$position\t-\t Score : ${item.score} \tDate : $saveDateString")
-                position++
-
-            }
-        } else {
-            println("${LabelDefinition.leaderBoardScoreNotFoundString}")
-        }
-        println()
-        println(LabelDefinition.separatorString)
-        println()
-        initMenu()
+    fun askForLeaderBoard() {
+        view.printLeaderBoard()
     }
 
-    fun replayGames() {
-        println(LabelDefinition.separatorString)
-        println(LabelDefinition.replayMenuTitle)
-        println()
-        var position = 1
-        val saves = save.saves
-        var canLaunchReplayInt = 0
-        var canLaunchReplayBool = false
-        var index = 0
-        var finalUserChoice = 0
-        if (saves.count() > 0) {
-
-            do {
-                for (save in saves) {
-                    val saveDateString = save.saveDate.toLocalDate()
-                    println("$position\t-\t Score : ${save.score} \tDate : $saveDateString")
-                    position++
-                }
-                position = 1
-                println()
-                val input = Scanner(System.`in`)
-                val userChoiceString = input.nextLine()
-                val userChoice = userChoiceString.toInt()
-                index = userChoice - 1
-                canLaunchReplayInt = index.compareTo(saves.count() - 1)
-                if ((canLaunchReplayInt > 0).not()) {
-                    canLaunchReplayBool = true
-                    finalUserChoice = index
-                }
-            } while (canLaunchReplayBool.not())
-
-            val save = saves.get(finalUserChoice)
-            val saveItems = save.saveItemList
-            val directions = mutableListOf<Direction>()
-            for (item in saveItems) {
-                directions.add(item.direction)
-                println("Direction : ${item.direction}")
-                view.printPlayground(item.playground)
-                println()
-            }
-            println(LabelDefinition.separatorString)
-            println()
-            initMenu()
-        } else {
-            println("${LabelDefinition.replayMenuSaveNotFoundString}")
-            println()
-            initMenu()
-        }
+    fun askForReplayGames() {
+        view.replayGames()
 
     }
 
@@ -326,6 +230,7 @@ class GamePresenter {
         foodBlocks = mutableListOf<Position>()
         size = 10
         save = Save(mutableListOf<GameSave>())
-        initMenu()
+        askForInitMenu()
     }
+
 }

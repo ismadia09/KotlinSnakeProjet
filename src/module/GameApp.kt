@@ -6,5 +6,6 @@ fun main( args : Array<String>){
 }
 
 fun startGame(){
-    GamePresenter().initMenu()
+    // GamePresenter().initMenu()
+    GameConsole(GamePresenter()).initMenu()
 }

@@ -8,11 +8,12 @@
   <component name="ChangeListManager">
     <list default="true" id="0058f122-71dc-4b5c-b1f4-2d926d2a7720" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kotlin/data/save/savedGame.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kotlin/data/save/savedGame.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kotlin/module/GameConsole.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kotlin/module/GameConsole.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kotlin/module/GamePresenter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kotlin/module/GamePresenter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/save/savedGame.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/save/savedGame.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kotlin/module/GameConsole.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/DataProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/DataProvider.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/LabelDefinition.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/LabelDefinition.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/GameApp.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/GameApp.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/GameConsole.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/GameConsole.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/GameInterface.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/GameInterface.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/GamePresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/GamePresenter.kt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -63,44 +64,44 @@
     <session id="1682398036">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="13" />
-          <entry key="project.open.time.1" value="1" />
+          <entry key="project.closed" value="14" />
+          <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.11" value="3" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.2" value="6" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="14" />
+          <entry key="project.opened" value="15" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="class" value="129" />
-          <entry key="kt" value="5065" />
-          <entry key="txt" value="84" />
+          <entry key="kt" value="5787" />
+          <entry key="txt" value="109" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CLASS" value="129" />
-          <entry key="Kotlin" value="5065" />
-          <entry key="PLAIN_TEXT" value="84" />
+          <entry key="Kotlin" value="5787" />
+          <entry key="PLAIN_TEXT" value="109" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="class" value="8" />
+          <entry key="class" value="9" />
           <entry key="java" value="1" />
-          <entry key="kt" value="56" />
+          <entry key="kt" value="67" />
           <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CLASS" value="8" />
+          <entry key="CLASS" value="9" />
           <entry key="JAVA" value="1" />
-          <entry key="Kotlin" value="56" />
+          <entry key="Kotlin" value="67" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -111,8 +112,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/module/GameConsole.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="19" column="31" lean-forward="true" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+            <state relative-caret-position="150">
+              <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
+              <folding>
+                <element signature="e#16#335#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -120,17 +124,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/module/GameInterface.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="8" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/module/ConsoleInput.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+            <state relative-caret-position="180">
+              <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -138,40 +133,19 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/module/GamePresenter.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="103">
-              <caret line="305" column="25" selection-start-line="305" selection-start-column="25" selection-end-line="305" selection-end-column="25" />
+            <state relative-caret-position="99">
+              <caret line="61" column="11" selection-start-line="61" selection-start-column="11" selection-end-line="61" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://$APPLICATION_HOME_DIR$/jre/jdk/Contents/Home/jre/lib/rt.jar!/java/lang/Thread.class">
+        <entry file="file://$PROJECT_DIR$/src/data/DataProvider.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2760">
-              <caret line="215" selection-start-line="215" selection-end-line="215" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/data/model/SaveItem.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
+            <state relative-caret-position="218">
+              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
               <folding>
-                <element signature="e#20#71#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/data/model/Snake.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1470">
-              <caret line="98" selection-start-line="98" selection-end-line="98" />
-              <folding>
-                <element signature="e#20#100#0" expanded="true" />
+                <element signature="e#14#61#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -180,8 +154,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/data/LabelDefinition.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+            <state relative-caret-position="240">
+              <caret line="16" column="32" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -189,17 +163,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/module/GameApp.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/data/model/GameSave.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="5" column="31" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="31" />
+            <state relative-caret-position="135">
+              <caret line="9" column="43" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -244,6 +209,9 @@
       <find>checkAteYourself</find>
       <find>enter</find>
       <find>printPLayground</find>
+      <find>repla</find>
+      <find>dis</find>
+      <find>leader</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -259,7 +227,6 @@
         <option value="$PROJECT_DIR$/src/data/Monster.kt" />
         <option value="$PROJECT_DIR$/src/misc/Utils.kt" />
         <option value="$PROJECT_DIR$/src/data/model/Monster.kt" />
-        <option value="$PROJECT_DIR$/src/data/DataProvider.kt" />
         <option value="$PROJECT_DIR$/src/module/Snake.kt" />
         <option value="$PROJECT_DIR$/src/module/Position.kt" />
         <option value="$PROJECT_DIR$/src/data/model/Position.kt" />
@@ -268,12 +235,13 @@
         <option value="$PROJECT_DIR$/src/module/ConsoleInputReadTask.kt" />
         <option value="$PROJECT_DIR$/src/data/model/SaveItem.java" />
         <option value="$PROJECT_DIR$/src/data/model/Save.kt" />
-        <option value="$PROJECT_DIR$/src/module/GameApp.kt" />
-        <option value="$PROJECT_DIR$/src/data/LabelDefinition.kt" />
         <option value="$PROJECT_DIR$/src/data/model/GameSave.kt" />
         <option value="$PROJECT_DIR$/src/data/model/SaveItem.kt" />
+        <option value="$PROJECT_DIR$/src/module/GameApp.kt" />
+        <option value="$PROJECT_DIR$/src/data/DataProvider.kt" />
         <option value="$PROJECT_DIR$/src/module/GameInterface.kt" />
         <option value="$PROJECT_DIR$/src/module/GameConsole.kt" />
+        <option value="$PROJECT_DIR$/src/data/LabelDefinition.kt" />
         <option value="$PROJECT_DIR$/src/module/GamePresenter.kt" />
       </list>
     </option>
@@ -294,6 +262,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -322,6 +292,13 @@
               <item name="Kto" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Kotlin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Kto" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
               <item name="save" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -344,8 +321,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -431,7 +406,14 @@
       <option name="project" value="LOCAL" />
       <updated>1547856980854</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Replay Game finished">
+      <created>1547905686504</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1547905686504</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -487,7 +469,7 @@
       <window_info id="Capture Tool" order="3" />
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info id="Image Layers" order="5" />
-      <window_info content_ui="combo" id="Project" order="6" visible="true" weight="0.3113582" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.3113582" />
       <window_info id="Captures" order="7" weight="0.25" />
       <window_info id="Structure" order="8" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Messages" order="0" weight="0.32531825" />
@@ -496,10 +478,10 @@
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.32956153" />
-      <window_info anchor="bottom" id="Run" order="6" weight="0.45928338" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.4582744" />
       <window_info anchor="bottom" id="Android Profiler" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Debug" order="9" visible="true" weight="0.41301274" />
+      <window_info anchor="bottom" id="Debug" order="9" weight="0.41301274" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Logcat" order="11" weight="0.62322944" />
       <window_info anchor="bottom" id="Inspection" order="12" weight="0.4" />
@@ -531,7 +513,8 @@
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <MESSAGE value="Save Model, sorted score" />
     <MESSAGE value="Menu, Classement et debut Rejouer Partie" />
-    <option name="LAST_COMMIT_MESSAGE" value="Menu, Classement et debut Rejouer Partie" />
+    <MESSAGE value="Replay Game finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="Replay Game finished" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -541,21 +524,15 @@
       <breakpoints>
         <line-breakpoint type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/module/GamePresenter.kt</url>
-          <line>180</line>
+          <line>165</line>
           <properties />
           <option name="timeStamp" value="23" />
         </line-breakpoint>
-        <line-breakpoint type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/module/GamePresenter.kt</url>
-          <line>284</line>
-          <properties />
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/module/GamePresenter.kt</url>
-          <line>216</line>
+          <line>185</line>
           <properties />
-          <option name="timeStamp" value="34" />
+          <option name="timeStamp" value="36" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -653,31 +630,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/data/DataProvider.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/module/ConsoleInputReadTask.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/module/GameInterface.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="8" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/module/ConsoleInput.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -708,17 +664,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/data/LabelDefinition.kt">
+    <entry file="file://$PROJECT_DIR$/src/module/ConsoleInput.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/module/GameApp.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+        <state relative-caret-position="60">
+          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -729,17 +678,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/module/GameApp.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="43" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/data/DataProvider.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <element signature="e#14#61#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/module/GameInterface.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/data/LabelDefinition.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="32" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/module/GameConsole.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="19" column="31" lean-forward="true" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+        <state relative-caret-position="150">
+          <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
+          <folding>
+            <element signature="e#16#335#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/module/GamePresenter.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="305" column="25" selection-start-line="305" selection-start-column="25" selection-end-line="305" selection-end-column="25" />
+        <state relative-caret-position="99">
+          <caret line="61" column="11" selection-start-line="61" selection-start-column="11" selection-end-line="61" selection-end-column="11" />
         </state>
       </provider>
     </entry>
