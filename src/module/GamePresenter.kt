@@ -33,7 +33,7 @@ class GamePresenter {
     var playground = arrayOf<Array<String>>()
     var foodBlocks = mutableListOf<Position>()
     var size = 10
-    var saveItemList = mutableListOf<SaveItem>()
+    val saveItemList = mutableListOf<SaveItem>()
     var currentScore = 0
     val fileName = "src/data/save/savedGame.txt"
     val file = File(fileName)
@@ -103,8 +103,6 @@ class GamePresenter {
 
         handleUserInput(input)
         view.printPlayground(playground)
-        val pgToSave = playground
-        saveGameStep(pgToSave)
     }
 
 
@@ -227,8 +225,9 @@ class GamePresenter {
      * Add SaveItem in SaveItem Array
      */
     fun saveGameStep(playground: Array<Array<String>>) {
-        var saveItem = SaveItem(lastDirection, playground)
+        val saveItem = SaveItem(lastDirection, playground)
         saveItemList.add(saveItem)
+
     }
 
 
@@ -302,19 +301,13 @@ class GamePresenter {
             val directions = mutableListOf<Direction>()
             for (item in saveItems) {
                 directions.add(item.direction)
-                println(item.direction)
+                println("Direction : ${item.direction}")
                 view.printPlayground(item.playground)
+                println()
             }
-            /* for (direction in directions){
-                 when (direction) {
-                     Direction.UP -> userInput("z")
-                     Direction.DOWN -> userInput("s")
-                     Direction.LEFT -> userInput("q")
-                     Direction.RIGHT -> userInput("d")
-                 }
-             }*/
-
-
+            println(LabelDefinition.separatorString)
+            println()
+            initMenu()
         } else {
             println("${LabelDefinition.replayMenuSaveNotFoundString}")
             println()
@@ -328,7 +321,6 @@ class GamePresenter {
         lastDirection = Direction.DOWN
         playground = arrayOf<Array<String>>()
         foodBlocks = mutableListOf<Position>()
-        saveItemList = mutableListOf<SaveItem>()
         currentScore = 0
         saveFileExists = false
         foodBlocks = mutableListOf<Position>()

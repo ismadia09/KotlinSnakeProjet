@@ -16,6 +16,8 @@ class GameConsole(private val presenter: GamePresenter) : GameInterface {
             val userInput = i.readLine() ?: ""
             presenter.userInput(userInput)
             println("Current score ${presenter.currentScore}")
+            val playgroungToSave = copyPlayGround(presenter.playground)
+            presenter.saveGameStep(playgroungToSave)
         } while (isPlaying)
     }
 
@@ -24,6 +26,7 @@ class GameConsole(private val presenter: GamePresenter) : GameInterface {
         isPlaying = false
         println("You have died ${presenter.currentScore}")
         presenter.resetGame()
+
     }
 
     override fun printPlayground(playground: Array<Array<String>>) {
@@ -38,4 +41,16 @@ class GameConsole(private val presenter: GamePresenter) : GameInterface {
     }
 
 
+    fun copyPlayGround(playground: Array<Array<String>>): Array<Array<String>> {
+        val copy = mutableListOf<Array<String>>()
+
+        for (array in playground) {
+            var values = mutableListOf<String>()
+            for (value in array) {
+                values.add(value)
+            }
+            copy.add(values.toTypedArray())
+        }
+        return copy.toTypedArray()
+    }
 }
