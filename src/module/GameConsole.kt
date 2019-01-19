@@ -23,6 +23,7 @@ class GameConsole(private val presenter: GamePresenter) : GameInterface {
         presenter.saveInFile()
         isPlaying = false
         println("You have died ${presenter.currentScore}")
+        presenter.resetGame()
     }
 
     override fun printPlayground(playground: Array<Array<String>>) {
@@ -34,12 +35,6 @@ class GameConsole(private val presenter: GamePresenter) : GameInterface {
             println()
         }
         println()
-    }
-
-
-    override fun printLeaderBoard() {
-        presenter.loadSave()
-
     }
 
 

@@ -1,5 +1,6 @@
 package module
 
+import data.LabelDefinition
 import data.model.*
 import java.io.*
 import java.time.LocalDateTime
@@ -30,8 +31,8 @@ class GamePresenter {
     private var snake = Snake(Position(0, 0))
     var lastDirection = Direction.DOWN
     var playground = arrayOf<Array<String>>()
-    private var foodBlocks = mutableListOf<Position>()
-    private val size = 10
+    var foodBlocks = mutableListOf<Position>()
+    var size = 10
     var saveItemList = mutableListOf<SaveItem>()
     var currentScore = 0
     val fileName = "src/data/save/savedGame.txt"
@@ -44,11 +45,8 @@ class GamePresenter {
     }
 
     fun initGame() {
-
-
         loadSave()
-        printLeaderBoard()
-        println("Start : ")
+        println("Press enter key to start the game : ")
         val input = Scanner(System.`in`)
         val lineString = input.nextLine()
 
@@ -66,6 +64,31 @@ class GamePresenter {
         view.startLoopReader()
     }
 
+    fun initMenu() {
+        println()
+        println("${LabelDefinition.menuHomeTitle}")
+        loadSave()
+        LabelDefinition.displayMenuItems()
+        println("${LabelDefinition.menuItemQuitGame}")
+
+        val input = Scanner(System.`in`)
+        val lineString = input.nextLine()
+
+        when (lineString) {
+            "1" -> initGame()
+            "2" -> printLeaderBoard()
+            "3" -> replayGames()
+            "q" -> quitGame()
+        }
+
+
+    }
+
+    fun quitGame() {
+        println("${LabelDefinition.quitGameString}")
+        return
+    }
+
 
     fun userInput(input: String) {
 
@@ -80,6 +103,8 @@ class GamePresenter {
 
         handleUserInput(input)
         view.printPlayground(playground)
+        val pgToSave = playground
+        saveGameStep(pgToSave)
     }
 
 
@@ -157,7 +182,6 @@ class GamePresenter {
             updateScore(isDead)
 
         }
-        saveGameStep()
         foodBlocks = snake.checkAteFood(foodBlocks)
     }
 
@@ -178,13 +202,9 @@ class GamePresenter {
     fun loadSave() {
         saveFileExists = file.exists()
         if (saveFileExists) {
-            println("Lecture de la sauvegarde $file back")
-            //Now time to read the family back into memory
+            println("Lecture de la sauvegarde\n")
             ObjectInputStream(FileInputStream(file)).use { it ->
-                //Read the family back from the file
                 save = it.readObject() as Save
-                print(save)
-                println()
             }
 
 
@@ -206,9 +226,8 @@ class GamePresenter {
     /**
      * Add SaveItem in SaveItem Array
      */
-    fun saveGameStep() {
+    fun saveGameStep(playground: Array<Array<String>>) {
         var saveItem = SaveItem(lastDirection, playground)
-        print(saveItem)
         saveItemList.add(saveItem)
     }
 
@@ -224,10 +243,97 @@ class GamePresenter {
 
     fun printLeaderBoard() {
         val saves = save.saves
-        var sortedList = saves.sortedWith(compareBy({ it.score }))
-        for (item in sortedList) {
-            val saveDateString = item.saveDate.toLocalDate()
-            println("Score du $saveDateString ${item.score}")
+        if (saves.count() > 0) {
+            var ascendingSortedScoreList = saves.sortedWith(compareBy({ it.score }))
+            val descendingSortedScoreList = ascendingSortedScoreList.reversed()
+            println(LabelDefinition.separatorString)
+            println(LabelDefinition.leaderBoardTitle)
+            println()
+
+            var position = 1
+            for (item in descendingSortedScoreList) {
+                val saveDateString = item.saveDate.toLocalDate()
+                println("$position\t-\t Score : ${item.score} \tDate : $saveDateString")
+                position++
+
+            }
+        } else {
+            println("${LabelDefinition.leaderBoardScoreNotFoundString}")
         }
+        println()
+        println(LabelDefinition.separatorString)
+        println()
+        initMenu()
+    }
+
+    fun replayGames() {
+        println(LabelDefinition.separatorString)
+        println(LabelDefinition.replayMenuTitle)
+        println()
+        var position = 1
+        val saves = save.saves
+        var canLaunchReplayInt = 0
+        var canLaunchReplayBool = false
+        var index = 0
+        var finalUserChoice = 0
+        if (saves.count() > 0) {
+
+            do {
+                for (save in saves) {
+                    val saveDateString = save.saveDate.toLocalDate()
+                    println("$position\t-\t Score : ${save.score} \tDate : $saveDateString")
+                    position++
+                }
+                position = 1
+                println()
+                val input = Scanner(System.`in`)
+                val userChoiceString = input.nextLine()
+                val userChoice = userChoiceString.toInt()
+                index = userChoice - 1
+                canLaunchReplayInt = index.compareTo(saves.count() - 1)
+                if ((canLaunchReplayInt > 0).not()) {
+                    canLaunchReplayBool = true
+                    finalUserChoice = index
+                }
+            } while (canLaunchReplayBool.not())
+
+            val save = saves.get(finalUserChoice)
+            val saveItems = save.saveItemList
+            val directions = mutableListOf<Direction>()
+            for (item in saveItems) {
+                directions.add(item.direction)
+                println(item.direction)
+                view.printPlayground(item.playground)
+            }
+            /* for (direction in directions){
+                 when (direction) {
+                     Direction.UP -> userInput("z")
+                     Direction.DOWN -> userInput("s")
+                     Direction.LEFT -> userInput("q")
+                     Direction.RIGHT -> userInput("d")
+                 }
+             }*/
+
+
+        } else {
+            println("${LabelDefinition.replayMenuSaveNotFoundString}")
+            println()
+            initMenu()
+        }
+
+    }
+
+    fun resetGame() {
+        snake = Snake(Position(0, 0))
+        lastDirection = Direction.DOWN
+        playground = arrayOf<Array<String>>()
+        foodBlocks = mutableListOf<Position>()
+        saveItemList = mutableListOf<SaveItem>()
+        currentScore = 0
+        saveFileExists = false
+        foodBlocks = mutableListOf<Position>()
+        size = 10
+        save = Save(mutableListOf<GameSave>())
+        initMenu()
     }
 }
