@@ -12,6 +12,9 @@ class Snake(var coord: Position) {
         body.add(Position(0, 0, "@"))
         body.add(Position(-1, 0))
         body.add(Position(-2, 0))
+        body.add(Position(-3, 0))
+        body.add(Position(-4, 0))
+        body.add(Position(-5, 0))
         this.sizeGround = sizeGround
     }
 
@@ -95,9 +98,12 @@ class Snake(var coord: Position) {
 
     fun checkAteFood(food: MutableList<Position>): MutableList<Position> {
 
-        if (food.contains(body[0])) {
-            addBodyBlock(lastDirection!!)
-            food.remove(body[0])
+        val headPosition = body.firstOrNull()
+        if(headPosition != null) {
+            if (food.contains(headPosition)) {
+                addBodyBlock(lastDirection!!)
+                food.remove(headPosition)
+            }
         }
 
         return food

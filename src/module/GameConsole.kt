@@ -4,60 +4,55 @@ import data.DataProvider
 import data.LabelDefinition
 import data.model.GameSave
 import data.model.Save
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.ObjectInputStream
-import java.io.ObjectOutputStream
-import java.time.LocalDateTime
+import misc.Utils.Companion.framePerSecond
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
 class GameConsole(private val presenter: GamePresenter) : GameInterface {
-    override fun initMenu() {
 
+    private var isPlaying = false
+
+
+    override fun initMenu() {
         println()
         println("${LabelDefinition.menuHomeTitle}")
-        loadSave()
+
         presenter.menuItems = DataProvider.prepareMenuHomeItem()
         displayMenuItems()
-        //println("${LabelDefinition.menuItemQuitGame}")
 
-        val input = Scanner(System.`in`)
-        val lineString = input.nextLine()
-
-        when (lineString) {
-            "1" -> presenter.initGame()
-            "2" -> presenter.askForLeaderBoard()
-            "3" -> presenter.askForReplayGames()
-            "4" -> presenter.askQuitGame()
-            "q" -> presenter.askQuitGame()
-        }
-    }
-
-    override fun loadSave() {
-        val saveFileExists = presenter.file.exists()
-        if (saveFileExists) {
-            println("Lecture de la sauvegarde\n")
-            ObjectInputStream(FileInputStream(presenter.file)).use { it ->
-                presenter.save = it.readObject() as Save
+        startLoop@ do {
+            val input = Scanner(System.`in`)
+            val lineString = input.nextLine()
+            when (lineString) {
+                "1" -> {
+                    presenter.initGame()
+                    break@startLoop
+                }
+                "2" -> {
+                    presenter.askForLeaderBoard()
+                    break@startLoop
+                }
+                "3" -> {
+                    presenter.askForReplayGames()
+                    break@startLoop
+                }
+                "4" -> {
+                    presenter.askQuitGame()
+                    break@startLoop
+                }
+                "q" -> {
+                    presenter.askQuitGame()
+                    break@startLoop
+                }
+                else -> println(message = "${LabelDefinition.userSelectionError}")
             }
+        } while (true)
 
-
-        }
     }
 
-    override fun saveInFile() {
-        val currentDate = LocalDateTime.now()
-        var gameSave = GameSave(presenter.saveItemList, presenter.currentScore, currentDate)
-        presenter.save.saves.add(gameSave)
-        ObjectOutputStream(FileOutputStream(presenter.file)).use { it -> it.writeObject(presenter.save) }
-        println("Partie Sauvegardée")
-        println()
-    }
 
-    override fun printLeaderBoard() {
-        val saves = presenter.save.saves
+    override fun printLeaderBoard(save: Save) {
+        val saves = save.saves
         if (saves.count() > 0) {
             var ascendingSortedScoreList = saves.sortedWith(compareBy({ it.score }))
             val descendingSortedScoreList = ascendingSortedScoreList.reversed()
@@ -81,12 +76,12 @@ class GameConsole(private val presenter: GamePresenter) : GameInterface {
         initMenu()
     }
 
-    override fun replayGames() {
+    override fun replayGameMenu(save: Save) {
         println(LabelDefinition.separatorString)
         println(LabelDefinition.replayMenuTitle)
         println()
         var position = 1
-        val saves = presenter.save.saves
+        val saves = save.saves
         var canLaunchReplayInt = 0
         var canLaunchReplayBool = false
         var index = 0
@@ -103,34 +98,44 @@ class GameConsole(private val presenter: GamePresenter) : GameInterface {
                 println()
                 val input = Scanner(System.`in`)
                 val userChoiceString = input.nextLine()
-                val userChoice = userChoiceString.toInt()
-                index = userChoice - 1
-                canLaunchReplayInt = index.compareTo(saves.count() - 1)
-                if ((canLaunchReplayInt > 0).not()) {
-                    canLaunchReplayBool = true
-                    finalUserChoice = index
+                val userChoice = userChoiceString.toIntOrNull()
+
+                if (userChoice != null && userChoice > 0) {
+
+                    index = userChoice!! - 1
+                    canLaunchReplayInt = index.compareTo(saves.count() - 1)
+                    if ((canLaunchReplayInt > 0).not()) {
+                        canLaunchReplayBool = true
+                        finalUserChoice = index
+                    }
                 }
+
             } while (canLaunchReplayBool.not())
 
             val save = saves.get(finalUserChoice)
-            val saveItems = save.saveItemList
-            val directions = mutableListOf<Direction>()
-            for (item in saveItems) {
-                directions.add(item.direction)
-                println("Direction : ${item.direction}")
-                printPlayground(item.playground)
-                println()
-            }
-            println(LabelDefinition.separatorString)
-            println()
-            initMenu()
+            printBackupGame(save)
+
         } else {
             println("${LabelDefinition.replayMenuSaveNotFoundString}")
-            println()
-            initMenu()
         }
+
+        println()
+        initMenu()
     }
 
+
+    private fun printBackupGame(save: GameSave) {
+        val saveItems = save.saveItemList
+        val directions = mutableListOf<Direction>()
+        for (item in saveItems) {
+            directions.add(item.direction)
+            println("Direction : ${item.direction}")
+            printPlayground(item.playground)
+            println()
+            framePerSecond()
+        }
+        println(LabelDefinition.separatorString)
+    }
 
     override fun displayMenuItems() {
         var position = 1
@@ -143,9 +148,6 @@ class GameConsole(private val presenter: GamePresenter) : GameInterface {
         }
     }
 
-    private var isPlaying = false
-
-
     override fun startLoopReader() {
         val i = ConsoleInput(1, 500, TimeUnit.MILLISECONDS)
         isPlaying = true
@@ -154,17 +156,13 @@ class GameConsole(private val presenter: GamePresenter) : GameInterface {
             val userInput = i.readLine() ?: ""
             presenter.userInput(userInput)
             println("Current score ${presenter.currentScore}")
-            val playgroungToSave = copyPlayGround(presenter.playground)
-            presenter.saveGameStep(playgroungToSave)
         } while (isPlaying)
     }
 
     override fun userDied() {
-        presenter.askForSaveInFile()
         isPlaying = false
         println("You have died ${presenter.currentScore}")
         presenter.resetGame()
-
     }
 
     override fun printPlayground(playground: Array<Array<String>>) {
@@ -176,20 +174,6 @@ class GameConsole(private val presenter: GamePresenter) : GameInterface {
             println()
         }
         println()
-    }
-
-
-    override fun copyPlayGround(playground: Array<Array<String>>): Array<Array<String>> {
-        val copy = mutableListOf<Array<String>>()
-
-        for (array in playground) {
-            var values = mutableListOf<String>()
-            for (value in array) {
-                values.add(value)
-            }
-            copy.add(values.toTypedArray())
-        }
-        return copy.toTypedArray()
     }
 
     override fun quitGame() {

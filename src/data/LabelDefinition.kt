@@ -15,6 +15,8 @@ class LabelDefinition {
         val replayMenuTitle = "Veuillez choisir une sauvegarde"
         val replayMenuSaveNotFoundString = "Veuillez terminer une partie afin de pouvoir rejouer"
         val initGameBeginMessage = "Appuyer sur Entrée afin de commencer la partie"
-
+        val userSelectionError = "Je n'ai pas compris ton choix, entre une valeur entre 1 et 4"
+        val gameSaved = "Partie Sauvegardée"
+        val readBackup = "Lecture de la sauvegarde"
     }
 }

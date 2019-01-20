@@ -2,7 +2,9 @@ package module
 
 import data.LabelDefinition
 import data.model.*
-import java.io.File
+import misc.Utils
+import java.io.*
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -12,7 +14,6 @@ enum class Direction {
     LEFT,
     RIGHT
 }
-
 
 class GamePresenter {
 
@@ -26,18 +27,15 @@ class GamePresenter {
     }
 
     private val view: GameInterface
+    private var gameDataSave = GameDataSave()
 
     private var snake = Snake(Position(0, 0))
     var lastDirection = Direction.DOWN
     var playground = arrayOf<Array<String>>()
     var foodBlocks = mutableListOf<Position>()
     var size = 10
-    val saveItemList = mutableListOf<SaveItem>()
     var currentScore = 0
-    val fileName = "src/data/save/savedGame.txt"
-    val file = File(fileName)
-    var saveFileExists = false
-    var save = Save(mutableListOf<GameSave>())
+
     var menuItems = arrayOf<String>()
 
     init {
@@ -54,8 +52,6 @@ class GamePresenter {
         if (lineString.equals("")) {
             initSnakeGame()
         }
-
-
     }
 
     private fun initSnakeGame() {
@@ -65,14 +61,13 @@ class GamePresenter {
     }
 
     fun askForInitMenu() {
+        gameDataSave.loadBackup()
         view.initMenu()
-
     }
 
     fun askQuitGame() {
         view.quitGame()
     }
-
 
     fun userInput(input: String) {
 
@@ -91,6 +86,8 @@ class GamePresenter {
 
 
     private fun resetPlayground() {
+
+        gameDataSave.handlerBackup(playground, lastDirection)
 
         for (i in 0 until playground.size) {
             for (j in 0 until playground[i].size) {
@@ -136,8 +133,6 @@ class GamePresenter {
                 lastDirection = Direction.UP
                 isDead = snake.moveSnake(lastDirection)
             }
-
-
             userInput.contains(BOTOOMKEY, true) -> if (lastDirection != Direction.UP) {
                 lastDirection = Direction.DOWN
                 isDead = snake.moveSnake(lastDirection)
@@ -151,19 +146,19 @@ class GamePresenter {
                 isDead = snake.moveSnake(lastDirection)
             }
             else -> {
-
                 isDead = snake.moveSnake(lastDirection)
-
             }
         }
 
         isDead?.let { isDead_ ->
             if (isDead_) {
+                askForSaveInFile()
                 view.userDied()
+            } else {
+                currentScore += 100
             }
-            updateScore(isDead)
-
         }
+
         foodBlocks = snake.checkAteFood(foodBlocks)
     }
 
@@ -182,42 +177,23 @@ class GamePresenter {
      * Load GameSave From a file
      */
     fun askForloadSave() {
-        view.loadSave()
+        gameDataSave.loadBackup()
     }
 
     /***
      * GameSave the SaveItem array in a file
      */
     fun askForSaveInFile() {
-        view.saveInFile()
+        gameDataSave.saveInFile(currentScore)
     }
 
-    /**
-     * Add SaveItem in SaveItem Array
-     */
-    fun saveGameStep(playground: Array<Array<String>>) {
-        val saveItem = SaveItem(lastDirection, playground)
-        saveItemList.add(saveItem)
-
-    }
-
-
-    /**
-     * Update score
-     */
-    private fun updateScore(isDead: Boolean) {
-        if (isDead == false) {
-            currentScore += 100
-        }
-    }
 
     fun askForLeaderBoard() {
-        view.printLeaderBoard()
+        view.printLeaderBoard(gameDataSave.save)
     }
 
     fun askForReplayGames() {
-        view.replayGames()
-
+        view.replayGameMenu(gameDataSave.save)
     }
 
     fun resetGame() {
@@ -226,10 +202,11 @@ class GamePresenter {
         playground = arrayOf<Array<String>>()
         foodBlocks = mutableListOf<Position>()
         currentScore = 0
-        saveFileExists = false
         foodBlocks = mutableListOf<Position>()
         size = 10
-        save = Save(mutableListOf<GameSave>())
+
+        gameDataSave.resetData()
+
         askForInitMenu()
     }
 
